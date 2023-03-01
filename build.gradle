@@ -29,3 +29,8 @@ tasks.withType(Test) {
     systemProperties(System.getProperties())
     useJUnitPlatform()
 }
+task reqres_test(type: Test) {
+    useJUnitPlatform {
+        includeTags("reqres_in")
+    }
+}
