@@ -1,3 +1,7 @@
+package guru.qa.tests;
+
+import guru.qa.models.LoginBodyModel;
+import guru.qa.models.LoginResponseModel;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -6,10 +10,13 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import static guru.qa.specs.TestSpecs.testRequestSpec;
+import static guru.qa.specs.TestSpecs.testResponseSpec;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
-public class ReqresInTests {
+public class ReqresInExtendedTests extends TestBase {
 
     private final String BASE_URL = "https://reqres.in/api";
 
@@ -86,19 +93,20 @@ public class ReqresInTests {
     @DisplayName("Verify token after user registration")
     @Tag("reqres_in")
     void checkSuccessfulRegisterTest() {
-        String testData = "{\"email\":\"eve.holt@reqres.in\", \"password\":\"pistol\"}";
-        String token = "QpwL5tke4Pnpja7X4";
+        LoginBodyModel loginData = new LoginBodyModel();
+        loginData.setEmail("eve.holt@reqres.in");
+        loginData.setPassword("pistol");
+        //String testData = "{\"email\":\"eve.holt@reqres.in\", \"password\":\"pistol\"}";
+        //String token = "QpwL5tke4Pnpja7X4";
 
-        given()
-                .log().uri()
-                .contentType(ContentType.JSON)
-                .body(testData)
+        LoginResponseModel response = given(testRequestSpec)
+                .body(loginData)
                 .when()
-                .post(BASE_URL + "/register")
+                .post("/register")
                 .then()
-                .log().status()
-                .log().body()
+                .spec(testResponseSpec)
                 .statusCode(200)
-                .body("token", is(token));
+                .extract().as(LoginResponseModel.class);
+        assertThat(response.getToken()).isEqualTo("QpwL5tke4Pnpja7X4");
     }
 }

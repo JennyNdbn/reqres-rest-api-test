@@ -1,5 +1,7 @@
 plugins {
     id 'java-library'
+    id "io.qameta.allure" version "2.11.2"
+    id "io.freefair.lombok" version "6.5.1"
 }
 
 group 'qa.guru'
@@ -10,11 +12,39 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    testImplementation (
-            "org.junit.jupiter:junit-jupiter:5.9.2",
-            "org.slf4j:slf4j-simple:2.0.6",
-            "io.rest-assured:rest-assured:5.3.0")
+def assertJVersion = "3.24.2",
+    slf4jVersion = "2.0.6",
+    junitJupiterVersion = "5.9.2",
+    restAssuredVersion = "5.3.0",
+    jacksonDatabindVersion = "2.14.2",
+    allureVersion = "2.21.0"
+
+dependencies
+        {
+            testImplementation(
+                    "org.junit.jupiter:junit-jupiter:$junitJupiterVersion",
+                    "org.slf4j:slf4j-simple:$slf4jVersion",
+                    "io.rest-assured:rest-assured:$restAssuredVersion",
+                    "org.assertj:assertj-core:$assertJVersion",
+                    "com.fasterxml.jackson.core:jackson-databind:$jacksonDatabindVersion",
+                    "io.qameta.allure:allure-rest-assured:$allureVersion",)
+        }
+
+allure {
+    version.set("2.21.0")
+    adapter {
+        allureJavaVersion.set(allureVersion)
+        aspectjVersion.set("1.9.5")
+        aspectjWeaver.set(true)
+
+        frameworks {
+            junit5 {
+                // Defaults to allureJavaVersion
+                adapterVersion.set(allureVersion)
+                enabled.set(true)
+            }
+        }
+    }
 }
 
 tasks.withType(JavaCompile) {
