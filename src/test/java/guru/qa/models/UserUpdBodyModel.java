@@ -1,9 +1,9 @@
 package guru.qa.models;
 
-import lombok.Data;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public @Data class LoginResponseModel {
-    String id, token;
+public @Data class UserUpdBodyModel {
+    private String name, job;
 }
