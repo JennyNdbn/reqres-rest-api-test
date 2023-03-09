@@ -17,7 +17,7 @@ public class ReqresInTests {
 
     @Test
     @DisplayName("Check response status of existing list of users")
-    @Tag("reqres_in")
+    @Tag("reqres_in_simple")
     void checkListUsersStatus() {
         given()
                 .log().uri()
@@ -31,7 +31,7 @@ public class ReqresInTests {
 
     @Test
     @DisplayName("Verify name and email of single user")
-    @Tag("reqres_in")
+    @Tag("reqres_in_simple")
     void checkSingleUser() {
         given()
                 .log().uri()
@@ -49,7 +49,7 @@ public class ReqresInTests {
 
     @Test
     @DisplayName("Check response status of non existing resource")
-    @Tag("reqres_in")
+    @Tag("reqres_in_simple")
     void checkResourceNotFoundStatus() {
         given()
                 .log().uri()
@@ -63,7 +63,7 @@ public class ReqresInTests {
 
     @Test
     @DisplayName("Verify name, job and date of user after update")
-    @Tag("reqres_in")
+    @Tag("reqres_in_simple")
     public void updateUser() {
         String updateData = "{\"name\": \"morpheus\", \"job\": \"zion resident\"}";
         String dateTimeNow = DateTimeFormatter.ofPattern("yyyy-MM-dd")
@@ -86,7 +86,7 @@ public class ReqresInTests {
 
     @Test
     @DisplayName("Verify token after user registration")
-    @Tag("reqres_in")
+    @Tag("reqres_in_simple")
     void checkSuccessfulRegisterTest() {
         String testData = "{\"email\":\"eve.holt@reqres.in\", \"password\":\"pistol\"}";
         String token = "QpwL5tke4Pnpja7X4";
