@@ -10,7 +10,8 @@ public @Data class SingleUserResponseModel {
     private SingleUserData user;
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public @Data static class SingleUserData {
+    public @Data
+    static class SingleUserData {
 
         private Integer id;
         private String email;
@@ -18,7 +19,6 @@ public @Data class SingleUserResponseModel {
         private String firstName;
         @JsonProperty("last_name")
         private String lastName;
-
 
 
     }

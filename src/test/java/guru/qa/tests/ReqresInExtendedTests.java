@@ -41,12 +41,12 @@ public class ReqresInExtendedTests extends TestBase {
                                 .get("/users/2")
                                 .then()
                                 .spec(testResponseSpec)
-                        .extract().as(SingleUserResponseModel.class));
+                                .extract().as(SingleUserResponseModel.class));
         step("Verify single user data", () -> {
-                assertThat(response.getUser().getId()).isEqualTo(2);
-                assertThat(response.getUser().getEmail()).isEqualTo("janet.weaver@reqres.in");
-                assertThat(response.getUser().getFirstName()).isEqualTo("Janet");
-                assertThat(response.getUser().getLastName()).isEqualTo("Weaver");
+            assertThat(response.getUser().getId()).isEqualTo(2);
+            assertThat(response.getUser().getEmail()).isEqualTo("janet.weaver@reqres.in");
+            assertThat(response.getUser().getFirstName()).isEqualTo("Janet");
+            assertThat(response.getUser().getLastName()).isEqualTo("Weaver");
         });
 
     }
@@ -56,12 +56,12 @@ public class ReqresInExtendedTests extends TestBase {
     @Tag("reqres_in")
     void checkResourceNotFoundStatus() {
         step("Check that response status is 404", () -> {
-        given(testRequestSpec)
-                .when()
-                .get("/unknown/23")
-                .then()
-                .spec(testResponseSpec)
-                .statusCode(404);
+            given(testRequestSpec)
+                    .when()
+                    .get("/unknown/23")
+                    .then()
+                    .spec(testResponseSpec)
+                    .statusCode(404);
         });
     }
 
@@ -72,20 +72,19 @@ public class ReqresInExtendedTests extends TestBase {
         UserUpdBodyModel user = new UserUpdBodyModel();
         user.setName("morpheus");
         user.setJob("zion resident");
-        //String updateData = "{\"name\": \"morpheus\", \"job\": \"zion resident\"}";
         String dateTimeNow = DateTimeFormatter.ofPattern("yyyy-MM-dd")
                 .format(LocalDateTime.now());
 
         UserUpdResponseModel response =
                 step("Update and get user data", () ->
-                given(testRequestSpec)
-                .body(user)
-                .when()
-                .put("/users/2")
-                .then()
-                .spec(testResponseSpec)
-                .statusCode(200)
-                .extract().as(UserUpdResponseModel.class));
+                        given(testRequestSpec)
+                                .body(user)
+                                .when()
+                                .put("/users/2")
+                                .then()
+                                .spec(testResponseSpec)
+                                .statusCode(200)
+                                .extract().as(UserUpdResponseModel.class));
         step("Verify user data after update", () -> {
             assertThat(response.getName()).isEqualTo("morpheus");
             assertThat(response.getJob()).isEqualTo("zion resident");
@@ -100,21 +99,19 @@ public class ReqresInExtendedTests extends TestBase {
         LoginBodyModel loginData = new LoginBodyModel();
         loginData.setEmail("eve.holt@reqres.in");
         loginData.setPassword("pistol");
-        //String testData = "{\"email\":\"eve.holt@reqres.in\", \"password\":\"pistol\"}";
-        //String token = "QpwL5tke4Pnpja7X4";
 
         LoginResponseModel response =
                 step("User registration", () ->
-                given(testRequestSpec)
-                .body(loginData)
-                .when()
-                .post("/register")
-                .then()
-                .spec(testResponseSpec)
-                .statusCode(200)
-                .extract().as(LoginResponseModel.class));
+                        given(testRequestSpec)
+                                .body(loginData)
+                                .when()
+                                .post("/register")
+                                .then()
+                                .spec(testResponseSpec)
+                                .statusCode(200)
+                                .extract().as(LoginResponseModel.class));
         step("Verify token after registration", () -> {
-        assertThat(response.getToken()).isEqualTo("QpwL5tke4Pnpja7X4");
+            assertThat(response.getToken()).isEqualTo("QpwL5tke4Pnpja7X4");
         });
     }
 }
