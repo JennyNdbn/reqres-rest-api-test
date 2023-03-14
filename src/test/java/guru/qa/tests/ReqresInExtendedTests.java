@@ -1,8 +1,10 @@
 package guru.qa.tests;
 
 import guru.qa.models.*;
+import io.qameta.allure.Owner;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -13,10 +15,12 @@ import static guru.qa.specs.TestSpecs.testResponseSpec;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.*;
 
 public class ReqresInExtendedTests extends TestBase {
 
     @Test
+    @Owner("Evgeniia Nadobnaia")
     @DisplayName("Check response status of existing list of users")
     @Tag("reqres_in")
     void checkListUsersStatus() {
@@ -31,6 +35,7 @@ public class ReqresInExtendedTests extends TestBase {
     }
 
     @Test
+    @Owner("Evgeniia Nadobnaia")
     @DisplayName("Verify name and email of single user")
     @Tag("reqres_in")
     void checkSingleUser() {
@@ -52,6 +57,7 @@ public class ReqresInExtendedTests extends TestBase {
     }
 
     @Test
+    @Owner("Evgeniia Nadobnaia")
     @DisplayName("Check response status of non existing resource")
     @Tag("reqres_in")
     void checkResourceNotFoundStatus() {
@@ -66,6 +72,7 @@ public class ReqresInExtendedTests extends TestBase {
     }
 
     @Test
+    @Owner("Evgeniia Nadobnaia")
     @DisplayName("Verify name, job and date of user after update")
     @Tag("reqres_in")
     public void updateUser() {
@@ -93,6 +100,7 @@ public class ReqresInExtendedTests extends TestBase {
     }
 
     @Test
+    @Owner("Evgeniia Nadobnaia")
     @DisplayName("Verify token after user registration")
     @Tag("reqres_in")
     void checkSuccessfulRegisterTest() {
@@ -112,6 +120,21 @@ public class ReqresInExtendedTests extends TestBase {
                                 .extract().as(LoginResponseModel.class));
         step("Verify token after registration", () -> {
             assertThat(response.getToken()).isEqualTo("QpwL5tke4Pnpja7X4");
+        });
+    }
+
+    @Test
+    @Owner("Evgeniia Nadobnaia")
+    @DisplayName("Verify user email by id from list of users")
+    @Tags({@Tag("reqres_in"),@Tag("groovy")})
+    void checkEmailByIdUsingGroovy() {
+        step("Verify user email using groovy", () -> {
+            given(testRequestSpec)
+                    .when()
+                    .get("/users?page=2")
+                    .then()
+                    .spec(testResponseSpec)
+                    .body("data.find{it.id == 9}.email", is("tobias.funke@reqres.in"));
         });
     }
 }
