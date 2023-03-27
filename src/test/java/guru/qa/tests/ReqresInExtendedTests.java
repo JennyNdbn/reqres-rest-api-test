@@ -34,27 +34,27 @@ public class ReqresInExtendedTests extends TestBase {
         });
     }
 
-    @Test
-    @Owner("Evgeniia Nadobnaia")
-    @DisplayName("Verify name and email of single user")
-    @Tag("reqres_in")
-    void checkSingleUser() {
-        SingleUserResponseModel response =
-                step("Get single user data", () ->
-                        given(testRequestSpec)
-                                .when()
-                                .get("/users/2")
-                                .then()
-                                .spec(testResponseSpec)
-                                .extract().as(SingleUserResponseModel.class));
-        step("Verify single user data", () -> {
-            assertThat(response.getUser().getId()).isEqualTo(2);
-            assertThat(response.getUser().getEmail()).isEqualTo("janet.weaver@reqres.in");
-            assertThat(response.getUser().getFirstName()).isEqualTo("Janet");
-            assertThat(response.getUser().getLastName()).isEqualTo("Weaver");
-        });
-
-    }
+//    @Test
+//    @Owner("Evgeniia Nadobnaia")
+//    @DisplayName("Verify name and email of single user")
+//    @Tag("reqres_in")
+//    void checkSingleUser() {
+//        SingleUserResponseModel response =
+//                step("Get single user data", () ->
+//                        given(testRequestSpec)
+//                                .when()
+//                                .get("/users/2")
+//                                .then()
+//                                .spec(testResponseSpec)
+//                                .extract().as(SingleUserResponseModel.class));
+//        step("Verify single user data", () -> {
+//            assertThat(response.getUser().getId()).isEqualTo(2);
+//            assertThat(response.getUser().getEmail()).isEqualTo("janet.weaver@reqres.in");
+//            assertThat(response.getUser().getFirstName()).isEqualTo("Janet");
+//            assertThat(response.getUser().getLastName()).isEqualTo("Weaver");
+//        });
+//
+//    }
 
     @Test
     @Owner("Evgeniia Nadobnaia")

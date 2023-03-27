@@ -64,3 +64,8 @@ task reqres_test(type: Test) {
         includeTags("reqres_in")
     }
 }
+task webinar_test(type: Test) {
+    useJUnitPlatform {
+        includeTags("webinar")
+    }
+}
